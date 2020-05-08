@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:sec="http://www.springframework.org/security/tags">
+
+<h:head>
+    <title>Home</title>
+</h:head>
+
+<h:body>
+    <p:tabMenu activeIndex="#{param.i}">
+        <p:menuitem value="Home" outcome="/index.xhtml">
+            <f:param name="i" value="0"/>
+        </p:menuitem>
+        <p:menuitem value="Register" outcome="/register.xhtml">
+            <f:param name="i" value="1"/>
+        </p:menuitem>
+        <p:menuitem value="Login" outcome="/login.xhtml">
+            <f:param name="i" value="2"/>
+        </p:menuitem>
+        <sec:authorize access="hasAnyAuthority('ROLE_ADMIN','ROLE_SUPERVISOR')">
+            <p:menuitem value="Messages" outcome="/contact-message.xhtml">
+                <f:param name="i" value="3"/>
+            </p:menuitem>
+        </sec:authorize>
+        <sec:authorize access="hasAuthority('ROLE_SUPERVISOR')">
+            <p:menuitem value="Management" outcome="/management.xhtml">
+                <f:param name="i" value="4"/>
+            </p:menuitem>
+        </sec:authorize>
+    </p:tabMenu>
+
+    <br/>
+
+    <h:outputText value="Home"/>
+
+    <br/>
+    <br/>
+
+    <h:form onsubmit="this.action='#{request.contextPath}/logout';">
+        <p:commandButton value="Logout" ajax="false"/>
+    </h:form>
+
+    <hr/>
+
+    <sec:authorize access="hasRole('USER')">
+        <h:form>
+            <p:growl id="growl" life="2000"/>
+            <p:panel header="Contact Us" style="width:25rem;">
+                <p:panelGrid columns="2" styleClass="ui-noborder">
+                    <h:outputLabel for="subject" value="Subject: "/>
+                    <p:inputText id="subject" value="#{home.subject}" style="min-width: 15rem;"/>
+                    <h:outputLabel for="message" value="Message: "/>
+                    <p:inputTextarea id="message" value="#{home.message}" style="min-width: 15rem; min-height: 15rem;"/>
+                </p:panelGrid>
+                <p:commandButton value="Send Message" ajax="false" action="#{home.sendMessage}"
+                                 style="margin-top: 20px; margin-bottom: 20px; margin-left: 150px;" update="growl"/>
+            </p:panel>
+        </h:form>
+    </sec:authorize>
+</h:body>
+
+</html>

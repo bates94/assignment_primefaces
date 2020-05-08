@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:sec="http://www.springframework.org/security/tags">
+
+<h:head>
+    <title>Home</title>
+</h:head>
+
+<h:body>
+    <p:tabMenu activeIndex="#{param.i}">
+        <p:menuitem value="Home" outcome="/index.xhtml">
+            <f:param name="i" value="0" />
+        </p:menuitem>
+        <p:menuitem value="Register" outcome="/register.xhtml">
+            <f:param name="i" value="1" />
+        </p:menuitem>
+        <p:menuitem value="Login" outcome="/login.xhtml">
+            <f:param name="i" value="2" />
+        </p:menuitem>
+        <sec:authorize access="hasAnyAuthority('ROLE_ADMIN','ROLE_SUPERVISOR')">
+            <p:menuitem value="Messages" outcome="/contact-message.xhtml">
+                <f:param name="i" value="3"/>
+            </p:menuitem>
+        </sec:authorize>
+        <sec:authorize access="hasAuthority('ROLE_SUPERVISOR')">
+            <p:menuitem value="Management" outcome="/management.xhtml">
+                <f:param name="i" value="4"/>
+            </p:menuitem>
+        </sec:authorize>
+    </p:tabMenu>
+
+    <h:form>
+        <h2 style="text-align: center; margin-bottom: 30px; margin-top: 30px;">MESSAGES</h2>
+        <p:dataTable var="message" value="#{contactmessage.messageList}" >
+            <p:column headerText="User Name">
+                <h:outputText value="#{message.username}"/>
+            </p:column>
+            <p:column headerText="Subject">
+                <h:outputText value="#{message.subject}"/>
+            </p:column>
+            <p:column headerText="Message">
+                <h:outputText value="#{message.message}"/>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+</h:body>
+
+</html>
