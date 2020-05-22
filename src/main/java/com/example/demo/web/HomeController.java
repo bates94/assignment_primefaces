@@ -52,6 +52,8 @@ public class HomeController {
             userContactMessage.setSubject(subject);
             userContactMessage.setUsername(username);
             userContactMessageRepository.save(userContactMessage);
+            this.message = null;
+            this.subject = null;
             addMessage("Contact message sent!");
         } else {
             addMessageError("Contact message didn't send!");

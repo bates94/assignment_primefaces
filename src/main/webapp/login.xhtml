@@ -15,7 +15,7 @@
 
     <h:body>
         <p:tabMenu activeIndex="#{param.i}">
-            <sec:authorize access="isAnonymous()">
+            <sec:authorize access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN','ROLE_SUPERVISOR')">
                 <p:menuitem value="Home" outcome="/index.xhtml">
                     <f:param name="i" value="0" />
                 </p:menuitem>

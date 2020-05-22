@@ -1,14 +1,17 @@
 package com.example.demo.web;
 
+import com.example.demo.models.User;
 import com.example.demo.models.UserRole;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.repositories.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import java.util.List;
 
 @Named(value = "management")
 @SessionScoped
@@ -17,8 +20,8 @@ public class ManagementController {
     private String privilege;
 
     private String username;
-//
-//    private List<String> userNameList;
+
+    private List<String> userNameList;
 
     @Autowired
     private UserRoleRepository userRoleRepository;
@@ -26,10 +29,18 @@ public class ManagementController {
     @Autowired
     private UserRepository userRepository;
 
-//    @PostConstruct
-//    public void init() {
-//        userNameList = userRepository.findAllUserName();
-//    }
+    @PostConstruct
+    public void init() {
+        userNameList = userRepository.findAllUserName();
+    }
+
+    public List<String> getUserNameList() {
+        return userNameList = userRepository.findAllUserName();
+    }
+
+    public void setUserNameList(List<String> userNameList) {
+        this.userNameList = userNameList;
+    }
 
     public String getPrivilege() {
         return privilege;

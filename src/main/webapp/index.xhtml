@@ -55,7 +55,7 @@
     <sec:authorize access="hasRole('USER')">
         <h:form>
             <p:growl id="growl" life="2000"/>
-            <p:panel header="Contact Us" style="width:25rem;">
+            <p:panel header="Contact Us" style="width:25rem;" id="messagecontext">
                 <p:panelGrid columns="2" styleClass="ui-noborder">
                     <h:outputLabel for="subject" value="Subject: "/>
                     <p:inputText id="subject" value="#{home.subject}" style="min-width: 15rem;"/>

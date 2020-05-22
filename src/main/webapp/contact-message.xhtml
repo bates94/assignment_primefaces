@@ -42,7 +42,7 @@
 
     <h:form>
         <h2 style="text-align: center; margin-bottom: 30px; margin-top: 30px;">MESSAGES</h2>
-        <p:dataTable var="message" value="#{contactmessage.messageList}" >
+        <p:dataTable var="message" value="#{contactmessage.messageList}" id="datatable">
             <p:column headerText="User Name">
                 <h:outputText value="#{message.username}"/>
             </p:column>
@@ -51,6 +51,12 @@
             </p:column>
             <p:column headerText="Message">
                 <h:outputText value="#{message.message}"/>
+            </p:column>
+            <p:column style="text-align: center;">
+                <p:growl id="growl" life="2000"/>
+                <p:commandButton update="growl" id="messagex" value="Delete" action="#{contactmessage.deleteMessage(message.username, message.message)}">
+                    <f:ajax render="datatable"/>
+                </p:commandButton>
             </p:column>
         </p:dataTable>
     </h:form>

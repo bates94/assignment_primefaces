@@ -39,13 +39,15 @@
             </p:menuitem>
         </sec:authorize>
     </p:tabMenu>
-
+    <!--<p:inputText id="user" value="#{management.username}"/>-->
     <h:form>
         <p:growl life="2000" id="growl"/>
         <p:panel header="Management">
             <p:panelGrid columns="2" styleClass="ui-noborder">
                     <p:outputLabel for="@next" value="User Name:"/>
-                    <p:inputText id="user" value="#{management.username}"/>
+                    <p:selectOneMenu value="#{management.username}">
+                        <f:selectItems value="#{management.userNameList}" var="username" itemLabel="#{username}" itemValue="#{username}"/>
+                    </p:selectOneMenu>
                     <p:outputLabel for="@next" value="Privilege:"/>
                     <p:selectOneMenu value="#{management.privilege}">
                         <f:selectItem itemLabel="ADMIN" itemValue="ROLE_ADMIN"/>

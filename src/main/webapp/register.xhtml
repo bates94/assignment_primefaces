@@ -23,9 +23,11 @@
 </style>
 <h:body>
     <p:tabMenu activeIndex="#{param.i}">
-        <p:menuitem value="Home Page" outcome="/index.xhtml">
-            <f:param name="i" value="0" />
-        </p:menuitem>
+        <sec:authorize access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN','ROLE_SUPERVISOR')">
+            <p:menuitem value="Home" outcome="/index.xhtml">
+                <f:param name="i" value="0" />
+            </p:menuitem>
+        </sec:authorize>
         <p:menuitem value="Register" outcome="/register.xhtml">
             <f:param name="i" value="1" />
         </p:menuitem>
