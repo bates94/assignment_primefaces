@@ -30,8 +30,8 @@
                 <f:param name="i" value="2" />
             </p:menuitem>
         </sec:authorize>
-        <sec:authorize access="isAnonymous()">
-            <p:menuitem value="Cities and Districts" outcome="/navbar.xhtml">
+        <sec:authorize access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN','ROLE_SUPERVISOR')">
+            <p:menuitem value="Cities and Districts" outcome="/country.xhtml">
                 <f:param name="i" value="3" />
             </p:menuitem>
         </sec:authorize>

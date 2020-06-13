@@ -11,20 +11,23 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <h:head>
-    <title>Home</title>
+    <title>Cities and Counties</title>
 </h:head>
 <h:body>
     <ui:include src="navbar.xhtml"></ui:include>
 
     <h:form>
-        <p:panel header="Management">
+        <p:growl life="2000" id="growl"/>
+        <p:panel header="Country">
             <p:panelGrid columns="2" styleClass="ui-noborder">
                 <p:outputLabel for="@next" value="City:"/>
                 <p:selectOneMenu value="#{country.city}">
-                    <f:selectItems value="#{country.country}" var="country" itemLabel="#{country.city}" itemValue="#{country.city}"/>
+                    <f:selectItems value="#{country.cityNames}" var="city" itemLabel="#{city}" itemValue="#{city}"/>
+                    <p:ajax update="district" listener="#{country.showDistricts(country.city)}"/>
                 </p:selectOneMenu>
-                <p:selectOneMenu value="#{country.district}">
-                    <f:selectItems value="#{country.country}" var="country" itemLabel="#{country.district}" itemValue="#{country.district}"/>
+                <p:outputLabel for="@next" value="County:"/>
+                <p:selectOneMenu id="district" value="#{country.district}">
+                    <f:selectItems value="#{country.districtNames}" var="district" itemLabel="#{district}" itemValue="#{district}"/>
                 </p:selectOneMenu>
                 <p:commandButton ajax="false" value="Save" action="#{country.save}"
                                  style="margin-left: 150px;" update="growl"/>

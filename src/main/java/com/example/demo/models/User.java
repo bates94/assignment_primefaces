@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import javax.faces.annotation.ManagedProperty;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -32,6 +33,12 @@ public class User {
     @Column(name = "enabled")
     @NotNull
     private Boolean enabled;
+
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "district")
+    private String district;
 
     public User() {
     }
@@ -92,6 +99,22 @@ public class User {
         this.enabled = enabled;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -102,6 +125,8 @@ public class User {
                 ", country='" + country + '\'' +
                 ", email='" + email + '\'' +
                 ", enabled=" + enabled +
+                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
                 '}';
     }
 }
