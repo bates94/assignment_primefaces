@@ -7,7 +7,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:sec="http://www.springframework.org/security/tags">
+      xmlns:sec="http://www.springframework.org/security/tags"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
 <h:head>
     <title>Register</title>
@@ -22,29 +23,7 @@
     }
 </style>
 <h:body>
-    <p:tabMenu activeIndex="#{param.i}">
-        <sec:authorize access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN','ROLE_SUPERVISOR')">
-            <p:menuitem value="Home" outcome="/index.xhtml">
-                <f:param name="i" value="0" />
-            </p:menuitem>
-        </sec:authorize>
-        <p:menuitem value="Register" outcome="/register.xhtml">
-            <f:param name="i" value="1" />
-        </p:menuitem>
-        <p:menuitem value="Login" outcome="/login.xhtml">
-            <f:param name="i" value="2" />
-        </p:menuitem>
-        <sec:authorize access="hasAnyAuthority('ROLE_ADMIN','ROLE_SUPERVISOR')">
-            <p:menuitem value="Messages" outcome="/contact-message.xhtml">
-                <f:param name="i" value="3"/>
-            </p:menuitem>
-        </sec:authorize>
-        <sec:authorize access="hasAuthority('ROLE_SUPERVISOR')">
-            <p:menuitem value="Management" outcome="/management.xhtml">
-                <f:param name="i" value="4"/>
-            </p:menuitem>
-        </sec:authorize>
-    </p:tabMenu>
+    <ui:include src="navbar.xhtml"></ui:include>
     <h:form>
         <p:growl id="message" life="2000" />
         <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">

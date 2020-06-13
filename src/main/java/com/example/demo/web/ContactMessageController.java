@@ -2,6 +2,7 @@ package com.example.demo.web;
 
 import com.example.demo.models.UserContactMessage;
 import com.example.demo.repositories.UserContactMessageRepository;
+import com.example.demo.utils.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,12 +29,7 @@ public class ContactMessageController implements Serializable {
     @Transactional
     public void deleteMessage(String username, String message) {
         userContactMessageRepository.deleteMessageForUsername(username,message);
-        addMessage("Message deleted. for:" + username);
+        Messages.addMessage("Message deleted. for:" + username);
     }
 
-
-    public void addMessage(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
 }

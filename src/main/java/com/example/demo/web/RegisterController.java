@@ -4,6 +4,7 @@ import com.example.demo.models.User;
 import com.example.demo.models.UserRole;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.repositories.UserRoleRepository;
+import com.example.demo.utils.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -268,7 +269,7 @@ public class RegisterController implements Serializable {
                 userRepository.save(user);
                 userRoleRepository.save(userRole);
 
-                addMessage("Register succesfull");
+                Messages.addMessage("Register succesfull");
 
                 ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 
@@ -281,16 +282,11 @@ public class RegisterController implements Serializable {
 
                 externalContext.redirect("/index.xhtml");
             } else {
-                addMessage("Register unsuccesfull");
+                Messages.addMessage("Register unsuccesfull");
             }
         } else {
-            addMessage("Register unsuccesfull");
+            Messages.addMessage("Register unsuccesfull");
         }
-    }
-
-    public void addMessage(String message) {
-        FacesMessage messagex = new FacesMessage(FacesMessage.SEVERITY_INFO, message, null);
-        FacesContext.getCurrentInstance().addMessage(null, messagex);
     }
 
     public void autoLogin(HttpServletRequest request, String username, String password) throws ServletException {

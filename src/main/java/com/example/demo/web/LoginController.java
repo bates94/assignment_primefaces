@@ -50,8 +50,4 @@ public class LoginController implements Serializable {
 //        }
     }
 
-    public void addMessage(String message) {
-        FacesMessage messagex = new FacesMessage(FacesMessage.SEVERITY_INFO, message, null);
-        FacesContext.getCurrentInstance().addMessage(null, messagex);
-    }
 }

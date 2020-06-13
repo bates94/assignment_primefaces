@@ -2,6 +2,7 @@ package com.example.demo.web;
 
 import com.example.demo.models.UserContactMessage;
 import com.example.demo.repositories.UserContactMessageRepository;
+import com.example.demo.utils.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -54,19 +55,9 @@ public class HomeController {
             userContactMessageRepository.save(userContactMessage);
             this.message = null;
             this.subject = null;
-            addMessage("Contact message sent!");
+            Messages.addMessage("Contact message sent!");
         } else {
-            addMessageError("Contact message didn't send!");
+            Messages.addMessageError("Contact message didn't send!");
         }
-    }
-
-    public void addMessageError(String message) {
-        FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null);
-        FacesContext.getCurrentInstance().addMessage(null, facesMessage);
-    }
-
-    public void addMessage(String message) {
-        FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, message, null);
-        FacesContext.getCurrentInstance().addMessage(null, facesMessage);
     }
 }

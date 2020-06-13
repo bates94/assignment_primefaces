@@ -4,6 +4,7 @@ import com.example.demo.models.User;
 import com.example.demo.models.UserRole;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.repositories.UserRoleRepository;
+import com.example.demo.utils.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -11,11 +12,12 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.util.List;
 
 @Named(value = "management")
 @SessionScoped
-public class ManagementController {
+public class ManagementController implements Serializable {
 
     private String privilege;
 
@@ -69,11 +71,6 @@ public class ManagementController {
 
         userRoleRepository.setFixedRole(role.getUserRole(), role.getUsername());
 
-        addMessage("Successful!");
-    }
-
-    public void addMessage(String message) {
-        FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, message, null);
-        FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+        Messages.addMessage("Successful!");
     }
 }
