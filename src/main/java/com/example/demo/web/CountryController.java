@@ -32,7 +32,6 @@ public class CountryController implements Serializable {
 
     @PostConstruct
     public void init() {
-        city = "";
         cityNames = countryRepository.findAllCities();
     }
 
@@ -80,9 +79,5 @@ public class CountryController implements Serializable {
         user.setDistrict(this.district);
         userRepository.save(user);
         Messages.addMessage("User has been reorganized!");
-    }
-
-    public void add() {
-
     }
 }

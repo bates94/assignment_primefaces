@@ -10,6 +10,8 @@ public class Country {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String country;
+
     private String city;
 
     private String district;
@@ -38,10 +40,19 @@ public class Country {
         this.district = district;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     @Override
     public String toString() {
         return "Country{" +
                 "id=" + id +
+                ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", district='" + district + '\'' +
                 '}';

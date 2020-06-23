@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:sec="http://www.springframework.org/security/tags"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<h:head>
+    <title>Order</title>
+    <style type="text/css">
+        .label {
+            width:20%;
+            padding:4px;
+        }
+
+        .value {
+            width:80%;
+            padding:4px;
+        }
+
+        .grid {
+            width:100%;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .outputLabel {
+            font-weight: bold;
+        }
+
+        .grid {
+            width:33%;
+            padding:4px;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <ui:include src="navbar.xhtml"></ui:include>
+    <br/>
+    <h:form>
+        <p:growl id="order-growl" life="2000"/>
+        <p:wizard flowListener="#{order.onFlowProcess}">
+            <p:tab id="shipping-address" title="Shipping Address">
+                <p:panel header="Address Details">
+                    <p:panelGrid columns="2" columnClasses="label, value" styleClass="ui-noborder">
+                        <p:outputLabel for="@next" value="Name:" styleClass="grid"/>
+                        <p:inputText id="order-receiver-name" required="true" value="#{order.shippingAddressDetails.name}"/>
+
+                        <p:outputLabel for="@next" value="Address:" styleClass="grid"/>
+                        <p:inputTextarea id="order-receiver-address" required="true" value="#{order.shippingAddressDetails.address}"/>
+
+                        <p:outputLabel for="@next" value="Country:" styleClass="grid"/>
+                        <p:selectOneMenu value="#{order.shippingAddressDetails.country}">
+                            <f:selectItems value="#{order.countryNames}"/>
+                            <p:ajax update="shipping-city" listener="#{order.showCities(order.shippingAddressDetails.country)}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="@next" value="City:" styleClass="grid"/>
+                        <p:selectOneMenu id="shipping-city" value="#{order.shippingAddressDetails.city}">
+                            <f:selectItems value="#{order.cityNames}" var="city" itemLabel="#{city}" itemValue="#{city}"/>
+                            <p:ajax update="shipping-district" listener="#{order.showDistricts(order.shippingAddressDetails.city)}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="@next" value="District:" styleClass="grid"/>
+                        <p:selectOneMenu id="shipping-district" value="#{order.shippingAddressDetails.district}">
+                            <f:selectItems value="#{order.districtNames}" var="district" itemLabel="#{district}" itemValue="#{district}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="@next" value="Postal Code:" styleClass="grid"/>
+                        <p:inputText id="order-receiver-postal-code" required="true" value="#{order.shippingAddressDetails.postalCode}"/>
+
+                        <p:outputLabel for="@next" value="Phone Number:" styleClass="grid"/>
+                        <p:inputText id="order-receiver-phone-number" required="true" value="#{order.shippingAddressDetails.phoneNumber}"/>
+
+                        <h:outputText value="Skip to last: " />
+                        <h:selectBooleanCheckbox value="#{order.skip}" />
+                    </p:panelGrid>
+                </p:panel>
+            </p:tab>
+            <p:tab id="billing-address" title="Billing Address">
+                <p:panel header="Address Details">
+                    <p:panelGrid columns="2" columnClasses="label, value" styleClass="ui-noborder">
+                        <p:outputLabel for="@next" value="Name:" styleClass="grid"/>
+                        <p:inputText id="billing-address-name" required="true" value="#{order.billingAddressDetails.name}"/>
+
+                        <p:outputLabel for="@next" value="Address:" styleClass="grid"/>
+                        <p:inputTextarea id="billing-address-address" required="true" value="#{order.billingAddressDetails.address}"/>
+
+                        <p:outputLabel for="@next" value="Country:" styleClass="grid"/>
+                        <p:selectOneMenu value="#{order.billingAddressDetails.country}">
+                            <f:selectItems value="#{order.countryNames}"/>
+                            <p:ajax update="billing-city" listener="#{order.showCities(order.billingAddressDetails.country)}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="@next" value="City:" styleClass="grid"/>
+                        <p:selectOneMenu id="billing-city" value="#{order.billingAddressDetails.city}">
+                            <f:selectItems value="#{order.cityNames}" var="city" itemLabel="#{city}" itemValue="#{city}"/>
+                            <p:ajax update="billing-district" listener="#{order.showDistricts(order.billingAddressDetails.city)}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="@next" value="District:" styleClass="grid"/>
+                        <p:selectOneMenu id="billing-district" value="#{order.billingAddressDetails.district}">
+                            <f:selectItems value="#{order.districtNames}" var="district" itemLabel="#{district}" itemValue="#{district}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="@next" value="Postal Code:" styleClass="grid"/>
+                        <p:inputText id="billing-address-postal-code" required="true" value="#{order.billingAddressDetails.postalCode}"/>
+
+                        <p:outputLabel for="@next" value="Phone Number:" styleClass="grid"/>
+                        <p:inputText id="billing-address-phone-number" required="true" value="#{order.billingAddressDetails.phoneNumber}"/>
+
+                        <h:outputText value="Skip to last: " />
+                        <h:selectBooleanCheckbox value="#{order.skip}" />
+                    </p:panelGrid>
+                </p:panel>
+            </p:tab>
+            <p:tab id="confirmation" title="Confirmation">
+                <p:panel header="Shipping Address">
+                    <p:panelGrid columns="2" columnClasses="label, value" styleClass="ui-noborder">
+                        <h:outputText value="Name:"/>
+                        <h:outputText value="#{order.shippingAddressDetails.name}"/>
+
+                        <h:outputText value="Address:"/>
+                        <h:outputText value="#{order.shippingAddressDetails.address}"/>
+
+                        <h:outputText value="Country:"/>
+                        <h:outputText value="#{order.shippingAddressDetails.country}"/>
+
+                        <h:outputText value="City:"/>
+                        <h:outputText value="#{order.shippingAddressDetails.city}"/>
+
+                        <h:outputText value="District:"/>
+                        <h:outputText value="#{order.shippingAddressDetails.district}"/>
+
+                        <h:outputText value="Postal Code:"/>
+                        <h:outputText value="#{order.shippingAddressDetails.postalCode}"/>
+
+                        <h:outputText value="Phone Number:"/>
+                        <h:outputText value="#{order.shippingAddressDetails.phoneNumber}"/>
+                    </p:panelGrid>
+                </p:panel>
+                <p:panel header="Billing Address">
+                    <p:panelGrid columns="2" columnClasses="label, value" styleClass="ui-noborder">
+                        <h:outputText value="Name:"/>
+                        <h:outputText value="#{order.billingAddressDetails.name}"/>
+
+                        <h:outputText value="Address:"/>
+                        <h:outputText value="#{order.billingAddressDetails.address}"/>
+
+                        <h:outputText value="Country:"/>
+                        <h:outputText value="#{order.billingAddressDetails.country}"/>
+
+                        <h:outputText value="City:"/>
+                        <h:outputText value="#{order.billingAddressDetails.city}"/>
+
+                        <h:outputText value="District:"/>
+                        <h:outputText value="#{order.billingAddressDetails.district}"/>
+
+                        <h:outputText value="Postal Code:"/>
+                        <h:outputText value="#{order.billingAddressDetails.postalCode}"/>
+
+                        <h:outputText value="Phone Number:"/>
+                        <h:outputText value="#{order.billingAddressDetails.phoneNumber}"/>
+                    </p:panelGrid>
+                </p:panel>
+                <br/>
+                <p:commandButton value="Submit" actionListener="#{order.save()}" update="order-growl"
+                                 process="@this" style="margin-left: 50%;"/>
+            </p:tab>
+        </p:wizard>
+    </h:form>
+</h:body>
+</html>

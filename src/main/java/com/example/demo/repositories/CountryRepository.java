@@ -10,6 +10,12 @@ import java.util.List;
 @Repository
 public interface CountryRepository extends JpaRepository<Country, Integer> {
 
+    @Query(value = "select distinct country from Country")
+    List<String> findAllCountries();
+
+    @Query(value = "select distinct city from Country where country = :country")
+    List<String> findAllCities(String country);
+
     @Query(value = "select distinct city from Country")
     List<String> findAllCities();
 
