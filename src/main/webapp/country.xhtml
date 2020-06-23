@@ -25,7 +25,7 @@
                     <f:selectItems value="#{country.cityNames}" var="city" itemLabel="#{city}" itemValue="#{city}"/>
                     <p:ajax update="district" listener="#{country.showDistricts(country.city)}"/>
                 </p:selectOneMenu>
-                <p:outputLabel for="@next" value="County:"/>
+                <p:outputLabel for="@next" value="District:"/>
                 <p:selectOneMenu id="district" value="#{country.district}">
                     <f:selectItems value="#{country.districtNames}" var="district" itemLabel="#{district}" itemValue="#{district}"/>
                 </p:selectOneMenu>

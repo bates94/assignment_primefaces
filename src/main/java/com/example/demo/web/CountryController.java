@@ -32,8 +32,8 @@ public class CountryController implements Serializable {
 
     @PostConstruct
     public void init() {
+        city = "";
         cityNames = countryRepository.findAllCities();
-        districtNames = countryRepository.findAllDistricts(city);
     }
 
     public String getCity() {

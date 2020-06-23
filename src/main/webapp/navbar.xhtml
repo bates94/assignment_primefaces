@@ -22,27 +22,27 @@
         </sec:authorize>
         <sec:authorize access="isAnonymous()">
             <p:menuitem value="Register" outcome="/register.xhtml">
-                <f:param name="i" value="1" />
+                <f:param name="i" value="0" />
             </p:menuitem>
         </sec:authorize>
         <sec:authorize access="isAnonymous()">
             <p:menuitem value="Login" outcome="/login.xhtml">
-                <f:param name="i" value="2" />
+                <f:param name="i" value="1" />
             </p:menuitem>
         </sec:authorize>
         <sec:authorize access="hasAnyAuthority('ROLE_USER','ROLE_ADMIN','ROLE_SUPERVISOR')">
             <p:menuitem value="Cities and Districts" outcome="/country.xhtml">
-                <f:param name="i" value="3" />
+                <f:param name="i" value="1" />
             </p:menuitem>
         </sec:authorize>
         <sec:authorize access="hasAnyAuthority('ROLE_ADMIN','ROLE_SUPERVISOR')">
             <p:menuitem value="Messages" outcome="/contact-message.xhtml">
-                <f:param name="i" value="4"/>
+                <f:param name="i" value="2"/>
             </p:menuitem>
         </sec:authorize>
         <sec:authorize access="hasAuthority('ROLE_SUPERVISOR')">
             <p:menuitem value="Management" outcome="/management.xhtml">
-                <f:param name="i" value="5"/>
+                <f:param name="i" value="3"/>
             </p:menuitem>
         </sec:authorize>
     </p:tabMenu>
